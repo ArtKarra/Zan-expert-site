@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zań Expert</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: linear-gradient(to bottom, #e9f3ff, #ffffff);
+      color: #0d1b2a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      width: 64px;
+      height: 64px;
+    }
+    .headline {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 24px;
+    }
+    .cta-button {
+      padding: 12px 24px;
+      background-color: #0d1b2a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 24px;
+    }
+    .services {
+      max-width: 600px;
+      text-align: left;
+      margin-top: 40px;
+    }
+    .services h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    .services ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .services li {
+      background: #fff;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .form-section {
+      margin-top: 40px;
+      width: 100%;
+      max-width: 600px;
+      text-align: left;
+    }
+    .form-section form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .form-section input, .form-section select, .form-section button {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .language-switcher {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .language-switcher select {
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="language-switcher">
+    <label for="lang">Тіл / Язык:</label>
+    <select id="lang">
+      <option value="kk">Қазақша</option>
+      <option value="ru">Русский</option>
+    </select>
+  </div>
+
+  <div class="logo">
+    <img src="zan_expert_logo.png" alt="Zań Expert logo">
+    <h1>Zań Expert</h1>
+  </div>
+  <div class="headline">Siziń cifrılıq zangeriñiz!</div>
+  <a href="#" class="cta-button">Бастау</a>
+
+  <div class="services">
+    <h2>Қызметтер:</h2>
+    <ul>
+      <li>📄 Құжат үлгілері (келісімшарттар, арыздар)</li>
+      <li>🧠 ЖИ арқылы құқықтық кеңестер</li>
+      <li>📬 Telegram-бот арқылы интерактивті көмек</li>
+      <li>💼 Бизнесті тіркеу және сүйемелдеу</li>
+      <li>⚖️ Еңбек, отбасы, тұрғын үй құқығы бойынша көмек</li>
+    </ul>
+  </div>
+
+  <div class="form-section">
+    <h2>Онлайн сұрау қалдыру</h2>
+    <form id="contact-form">
+      <input type="text" id="name" placeholder="Атыңыз" required>
+      <input type="tel" id="phone" placeholder="Телефон нөмірі" required>
+      <select id="service">
+        <option>Қызмет түрі</option>
+        <option>Құжат дайындау</option>
+        <option>Жеке кеңес</option>
+        <option>Бизнеске құқықтық сүйемелдеу</option>
+      </select>
+      <button type="submit">Жіберу</button>
+    </form>
+  </div>
+
+  <script>
+    const TOKEN = '7925073100:AAHKDNoeZDio0t5L3x8qMQ4cCIc1r0XmkZA';
+    const CHAT_ID = '7925073100';
+    const URI_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const service = document.getElementById('service').value;
+
+      const message = `📥 Жаңа сұрау:
+👤 Аты: ${name}
+📱 Телефон: ${phone}
+🛠 Қызмет түрі: ${service}`;
+
+      fetch(URI_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message
+        })
+      })
+      .then(res => {
+        alert('Сұрау жіберілді!');
+        document.getElementById('contact-form').reset();
+      })
+      .catch(err => {
+        alert('Қате пайда болды. Қайталап көріңіз.');
+        console.error(err);
+      });
+    });
+  </script>
+</body>
+</html>
